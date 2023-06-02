@@ -6,11 +6,19 @@ GNL			=	$(LIB_PATH)/gnl.a
 FLAGS		= 	-Wall -Wextra -Werror -g	
 RM			= 	rm -f
 GREEN		= 	\033[0;32m
+BIG		= 	\033[0;1m
 RESET		= 	\033[0m
 
 
 
-SOURCES	=	./main.c \
+SOURCES	=	./main/main.c \
+			./main/dup.c \
+			./main/exec.c \
+			./main/fork.c \
+			./main/free.c \
+			./main/init.c \
+			./main/path.c \
+			./main/process_cmd.c \
 
 
  
@@ -22,6 +30,8 @@ CC	=	gcc $(FLAGS)
 RM	=	rm -f				
 
 all		: lib $(NAME)
+	@echo "$(GREEN)\nBravo le projet est compilé.$(RESET)\n\n$(BIG)Creez un fichier avec du texte, puis appelez le programme de cette façon : ./pipex file_in cmd1 cmd2 file_out\n$(RESET)"
+	@echo "Pour utiliser l'entrée stdin : ./pipex here_doc EOF cmd1 cmd2 file_out\n"
 
 $(NAME): $(OBJETS)
 	@echo "Création de l'executable $(NAME)"
