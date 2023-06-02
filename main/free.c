@@ -6,7 +6,7 @@
 /*   By: snaggara <snaggara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 13:36:56 by snaggara          #+#    #+#             */
-/*   Updated: 2023/06/02 13:00:22 by snaggara         ###   ########.fr       */
+/*   Updated: 2023/06/02 14:22:26 by snaggara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,13 @@ int	ft_free_double_tab(char **path)
 	while (path[i])
 		free(path[i++]);
 	free(path);
+	return (0);
+}
+
+int	ft_close_all_fds(void)
+{
+	close(STDERR_FILENO);
+	close(STDIN_FILENO);
+	close(STDOUT_FILENO);
 	return (0);
 }

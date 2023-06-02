@@ -60,6 +60,8 @@ fclean	:	clean
 	@$(MAKE) --no-print-directory -C $(LIB_PATH) fclean
 	@echo "Je sors de la librairie libft-plus"
 	@echo "\n$(GREEN)Tout les fichiers ont bien été effacés$(RESET)\n"
+	@echo "Suppression de tout les fichiers ajoutés par l'utilisateur\n"
+
 
 re		:	fclean all
 

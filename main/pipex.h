@@ -6,7 +6,7 @@
 /*   By: snaggara <snaggara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 10:34:15 by snaggara          #+#    #+#             */
-/*   Updated: 2023/06/02 13:07:50 by snaggara         ###   ########.fr       */
+/*   Updated: 2023/06/02 14:21:32 by snaggara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct s_data
 	char	*stop_str;
 	int		here_doc;
 	char	*stdin_line;
+	int		fd_in;
 
 }	t_data;
 
@@ -68,5 +69,6 @@ void	ft_process_cmd1(t_data *d, int *fd);
 int		ft_parse_here_doc(t_data *d, char **av);
 int		ft_parse_classic(t_data *d, char **av);
 int		ft_stdin_file(t_data *d);
+int		ft_close_all_fds(void);
 
 #endif
