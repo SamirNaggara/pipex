@@ -6,7 +6,7 @@
 /*   By: snaggara <snaggara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 10:34:15 by snaggara          #+#    #+#             */
-/*   Updated: 2023/06/02 14:21:32 by snaggara         ###   ########.fr       */
+/*   Updated: 2023/06/05 11:07:47 by snaggara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,5 +70,12 @@ int		ft_parse_here_doc(t_data *d, char **av);
 int		ft_parse_classic(t_data *d, char **av);
 int		ft_stdin_file(t_data *d);
 int		ft_close_all_fds(void);
+int		ft_cmd_valid(t_data *d, char *cmd);
+int		ft_test_cmds(t_data *d);
+int		ft_parse_doc(t_data *d, char **av);
+t_data *ft_free_d_path_close_fds(t_data *data);
+t_data *ft_free_d_close_fds(t_data *d);
+int	ft_create_stdout(t_data *d);
+
 
 #endif

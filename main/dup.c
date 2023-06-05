@@ -6,7 +6,7 @@
 /*   By: snaggara <snaggara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 12:04:30 by snaggara          #+#    #+#             */
-/*   Updated: 2023/06/02 14:25:07 by snaggara         ###   ########.fr       */
+/*   Updated: 2023/06/03 10:12:03 by snaggara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ int	ft_inverse_stdout(t_data *d)
 	if (dup2(fd_out, STDOUT_FILENO) == -1)
 	{
 		perror(E_DUP2);
-		exit(1);
 		close(fd_out);
 		return (0);
 	}
