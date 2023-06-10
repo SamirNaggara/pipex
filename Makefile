@@ -8,6 +8,8 @@ RM			= 	rm -f
 GREEN		= 	\033[0;32m
 BIG		= 	\033[0;1m
 RESET		= 	\033[0m
+CC	=	gcc $(FLAGS)
+RM	=	rm -f				
 
 
 
@@ -26,8 +28,6 @@ SOURCES	=	./main/main.c \
 
 OBJETS	=	$(SOURCES:.c=.o)			
 
-CC	=	gcc $(FLAGS)
-RM	=	rm -f				
 
 all		: lib $(NAME)
 	@echo "$(GREEN)\nBravo le projet est compilé.$(RESET)\n\n$(BIG)Creez un fichier avec du texte, puis appelez le programme de cette façon : ./pipex file_in cmd1 cmd2 file_out\n$(RESET)"
