@@ -6,42 +6,39 @@
 /*   By: snaggara <snaggara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 13:40:22 by snaggara          #+#    #+#             */
-/*   Updated: 2023/06/05 11:08:24 by snaggara         ###   ########.fr       */
+/*   Updated: 2023/06/11 09:43:01 by snaggara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-t_data	*ft_init(int ac, char **av, char **envp)
+t_data	ft_init(int ac, char **av, char **envp)
 {
-	t_data	*d;
+	t_data	d;
 
-	d = (t_data *)malloc(sizeof(t_data));
-	if (!d)
-		return ((t_data *)0);
 	if (ac < 5)
 	{
-		ft_printf(STDERR_FILENO, "%s\n", E_NB_ARG);
+		fd_printf(STDERR_FILENO, "%s\n", E_NB_ARG);
 		ft_close_all_fds();
-		free(d);
-		return ((t_data *)0);
+		exit(0);
 	}
-	d->envp = envp;
-	d->ac = ac;
-	d->av = av;
-	d->path = ft_get_path(envp);
-	if (!d->path)
-		return (ft_free_d_close_fds(d));
-	if (!ft_parse_doc(d, av))
+	d.envp = envp;
+	d.ac = ac;
+	d.av = av;
+	d.path = ft_get_path(envp);
+	if (!d.path)
 	{
-		ft_free_double_tab(d->path);
-		free(d);
 		ft_close_all_fds();
-		return ((t_data *)0);
+		exit(0);
+	}
+	if (!ft_parse_doc(&d, av))
+	{
+		ft_free_double_tab(d.path);
+		ft_close_all_fds();
+		exit(0);
 	}
 	return (d);
 }
-
 
 int	ft_parse_doc(t_data *d, char **av)
 {
@@ -70,39 +67,15 @@ int	ft_parse_here_doc(t_data *d, char **av)
 	{
 		if (!ft_stdin_file(d))
 		{
-			free(d);
 			return (0);
 		}
 	}
 	return (1);
 }
-
-/*
-	Si on est dans le cas here doc
-	il prends les infos du stdin et les mets dans un fichier temporaire
-*/
-int	ft_stdin_file(t_data *d)
-{
-	int		fd_tmp;
-	char	*stdin_line;
-
-	fd_tmp = open(TMP_FILE_NAME, O_WRONLY | O_CREAT | O_TRUNC, 0655);
-	stdin_line = get_next_line(STDIN_FILENO);
-	while (!stdin_line || !ft_strnstr(stdin_line, d->stop_str,
-			ft_strlen(d->stop_str)))
-	{
-		write(fd_tmp, stdin_line, ft_strlen(stdin_line));
-		free(stdin_line);
-		stdin_line = get_next_line(STDIN_FILENO);
-	}
-	free(stdin_line);
-	close(fd_tmp);
-	return (1);
-}
-
 /*
 	Create stdout file
 */
+
 int	ft_create_stdout(t_data *d)
 {
 	int		fd_out;
@@ -111,16 +84,15 @@ int	ft_create_stdout(t_data *d)
 	if (fd_out == -1)
 	{
 		if (errno == EACCES)
-			ft_printf(STDERR_FILENO, "%s %s\n", E_PERMISSION, d->file_out);
+			fd_printf(STDERR_FILENO, "%s %s\n", E_PERMISSION, d->file_out);
 		else
-			ft_printf(STDERR_FILENO, "%s\n", E_OUT_FILE);
+			fd_printf(STDERR_FILENO, "%s\n", E_OUT_FILE);
 		close(fd_out);
 		return (0);
 	}
 	close(fd_out);
 	return (1);
 }
-
 
 int	ft_parse_classic(t_data *d, char **av)
 {

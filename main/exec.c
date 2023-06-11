@@ -6,7 +6,7 @@
 /*   By: snaggara <snaggara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 13:36:12 by snaggara          #+#    #+#             */
-/*   Updated: 2023/06/03 13:04:24 by snaggara         ###   ########.fr       */
+/*   Updated: 2023/06/11 09:40:58 by snaggara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	ft_exec_cmd(t_data *d, char *cmd)
 			status = execve(full_cmd, arguments, d->envp);
 		free(full_cmd);
 	}
-	ft_printf(STDERR_FILENO, "%s%s\n", E_CMD_NOT_FOUND, cmd);
+	fd_printf(STDERR_FILENO, "%s%s\n", E_CMD_NOT_FOUND, cmd);
 	ft_free_double_tab(arguments);
 	if (status == -1)
 		return (0);
@@ -45,10 +45,11 @@ int	ft_cmd_valid(t_data *d, char *cmd)
 	char	**arguments;
 	int		status;
 
+	if (!*cmd)
+		return (ft_empty_cmd());
 	arguments = ft_split(cmd, ' ');
 	i = 0;
 	status = 0;
-	
 	while (d->path[i])
 	{
 		full_cmd = ft_strjoin(d->path[i++], arguments[0]);
@@ -59,7 +60,13 @@ int	ft_cmd_valid(t_data *d, char *cmd)
 		free(full_cmd);
 	}
 	if (!status)
-		ft_printf(STDERR_FILENO, "%s%s\n", E_CMD_NOT_FOUND, cmd);
+		fd_printf(STDERR_FILENO, "%s%s\n", E_CMD_NOT_FOUND, cmd);
 	ft_free_double_tab(arguments);
 	return (status);
+}
+
+int	ft_empty_cmd(void)
+{
+	fd_printf(STDERR_FILENO, E_NOCMD);
+	return (0);
 }

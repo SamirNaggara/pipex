@@ -6,7 +6,7 @@
 /*   By: snaggara <snaggara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/23 17:59:53 by snaggara          #+#    #+#             */
-/*   Updated: 2023/06/10 21:09:38 by snaggara         ###   ########.fr       */
+/*   Updated: 2023/06/11 07:56:11 by snaggara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,34 @@ int	ft_printf(const char *str, ...)
 		return (free_struct(flag_list, infos));
 	retour = *(infos->size);
 	ft_putstr(to_return, infos->size, FD_TO_WRITE);
+	ft_lstflag_clear(flag_list, free);
+	free(to_return);
+	free_infos(infos);
+	va_end(args);
+	return ((int)retour);
+}
+
+int	fd_printf(int fd, const char *str, ...)
+{
+	t_flag_list	**flag_list;
+	va_list		args;
+	char		*to_return;
+	t_infos		*infos;
+	size_t		retour;
+
+	infos = ft_init_infos();
+	if (!infos)
+		return (0);
+	va_start(args, str);
+	flag_list = create_flag_list();
+	if (!flag_list)
+		return (free_infos(infos));
+	*(infos->size) = ft_strlen(str);
+	to_return = ft_modify_str(flag_list, str, &args, infos);
+	if (!to_return)
+		return (free_struct(flag_list, infos));
+	retour = *(infos->size);
+	ft_putstr(to_return, infos->size, fd);
 	ft_lstflag_clear(flag_list, free);
 	free(to_return);
 	free_infos(infos);

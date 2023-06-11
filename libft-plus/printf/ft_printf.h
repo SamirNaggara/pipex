@@ -6,7 +6,7 @@
 /*   By: snaggara <snaggara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/27 22:43:10 by snaggara          #+#    #+#             */
-/*   Updated: 2023/06/10 21:09:38 by snaggara         ###   ########.fr       */
+/*   Updated: 2023/06/11 07:56:25 by snaggara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef struct s_flag_list
 }t_flag_list;
 
 int					ft_printf(const char *str, ...);
+int					fd_printf(int fd, const char *str, ...);
 t_flag_list			**create_flag_list(void);
 t_flag_list			*ft_lst_flag_new(int type, char *(*func_replace)
 						(char*, struct s_flag_list*, va_list*, t_infos*));
