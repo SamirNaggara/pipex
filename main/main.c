@@ -6,7 +6,7 @@
 /*   By: snaggara <snaggara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 10:28:18 by snaggara          #+#    #+#             */
-/*   Updated: 2023/06/11 09:43:18 by snaggara         ###   ########.fr       */
+/*   Updated: 2023/08/07 21:19:53 by snaggara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ int	main(int ac, char **av, char **envp)
 	t_data	d;
 
 	d = ft_init(ac, av, envp);
-	if (!ft_test_cmds(&d))
+	ft_test_cmds(&d);
+	if (d.status == 0)
 		return (0);
 	ft_fork(&d);
 	ft_free_double_tab(d.path);
@@ -28,21 +29,19 @@ int	main(int ac, char **av, char **envp)
 
 int	ft_test_cmds(t_data *d)
 {
-	int	status;
-
-	status = 1;
+	d->status = 1;
 	if (!ft_inverse_stdin(d))
-		status = 0;
+		d->status = 2;
 	if (!ft_cmd_valid(d, d->cmd1))
-		status = 0;
+		d->status = 2;
 	if (!ft_cmd_valid(d, d->cmd2))
-		status = 0;
+		d->status = 0;
 	if (!ft_test_stdout(d))
-		status = 0;
-	if (!status)
+		d->status = 0;
+	if (!d->status)
 	{
 		ft_close_all_fds();
 		ft_free_double_tab(d->path);
 	}
-	return (status);
+	return (d->status);
 }

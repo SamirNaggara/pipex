@@ -6,7 +6,7 @@
 /*   By: snaggara <snaggara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 10:34:15 by snaggara          #+#    #+#             */
-/*   Updated: 2023/08/07 16:54:25 by snaggara         ###   ########.fr       */
+/*   Updated: 2023/08/07 21:11:00 by snaggara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
 #  define E_FILE_NOT_FOUND2 "no such file or directory: ./"
 #  define E_CMD_NOT_FOUND "command not found: "
 #  define E_NOCMD "permission denied: "
-#  define E_NB_ARG "Not enough arguments"
+#  define E_NB_ARG "No good number arguments"
 # endif
 
 typedef struct s_data
@@ -53,6 +53,7 @@ typedef struct s_data
 	int		here_doc;
 	char	*stdin_line;
 	int		fd_in;
+	int		status;
 
 }	t_data;
 

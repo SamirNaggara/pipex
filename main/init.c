@@ -6,7 +6,7 @@
 /*   By: snaggara <snaggara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 13:40:22 by snaggara          #+#    #+#             */
-/*   Updated: 2023/08/07 18:07:55 by snaggara         ###   ########.fr       */
+/*   Updated: 2023/08/07 20:37:25 by snaggara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_data	ft_init(int ac, char **av, char **envp)
 {
 	t_data	d;
 
-	if (ac < 5)
+	if (!(ac == 5 || (ac == 6 && strcmp("here_doc", av[1]) == 0)))
 	{
 		fd_printf(STDERR_FILENO, "%s\n", E_NB_ARG);
 		ft_close_all_fds();
