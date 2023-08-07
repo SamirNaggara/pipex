@@ -6,7 +6,7 @@
 /*   By: snaggara <snaggara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/02 12:04:30 by snaggara          #+#    #+#             */
-/*   Updated: 2023/06/11 09:42:44 by snaggara         ###   ########.fr       */
+/*   Updated: 2023/08/07 16:55:53 by snaggara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,10 @@ int	ft_inverse_stdout(t_data *d)
 {
 	int		fd_out;
 
-	fd_out = open(d->file_out, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (d->here_doc)
+		fd_out = open(d->file_out, O_WRONLY | O_APPEND, 0644);
+	else
+		fd_out = open(d->file_out, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd_out == -1)
 	{
 		if (errno == EACCES)
@@ -63,7 +66,7 @@ int	ft_test_stdout(t_data *d)
 {
 	int		fd_out;
 
-	fd_out = open(d->file_out, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	fd_out = open(d->file_out, O_WRONLY | O_APPEND | O_CREAT, 0644);
 	if (fd_out == -1)
 	{
 		if (errno == EACCES)
@@ -96,5 +99,26 @@ int	ft_stdin_file(t_data *d)
 	}
 	free(stdin_line);
 	close(fd_tmp);
+	return (1);
+}
+
+/*
+	Create stdout file
+*/
+int	ft_create_stdout(t_data *d)
+{
+	int		fd_out;
+
+	fd_out = open(d->file_out, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (fd_out == -1)
+	{
+		if (errno == EACCES)
+			fd_printf(STDERR_FILENO, "%s %s\n", E_PERMISSION, d->file_out);
+		else
+			fd_printf(STDERR_FILENO, "%s\n", E_OUT_FILE);
+		close(fd_out);
+		return (0);
+	}
+	close(fd_out);
 	return (1);
 }

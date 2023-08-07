@@ -6,22 +6,22 @@
 /*   By: snaggara <snaggara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 13:39:47 by snaggara          #+#    #+#             */
-/*   Updated: 2023/06/02 13:01:38 by snaggara         ###   ########.fr       */
+/*   Updated: 2023/08/07 16:53:35 by snaggara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-char	**ft_get_path(char **envp)
+char	**ft_get_path(t_data *d)
 {
 	int		i;
 	char	**path;
 	char	*str_path;
 
 	i = 0;
-	while (!ft_strnstr(envp[i], "PATH=", 5))
+	while (d->path_exist && !ft_strnstr(d->envp[i], "PATH=", 5))
 		i++;
-	str_path = ft_add_slash(envp[i] + 5);
+	str_path = ft_add_slash(d->envp[i] + 5);
 	if (!str_path)
 		return (NULL);
 	path = ft_split(str_path, ':');

@@ -6,7 +6,7 @@
 /*   By: snaggara <snaggara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 10:34:15 by snaggara          #+#    #+#             */
-/*   Updated: 2023/06/11 09:43:55 by snaggara         ###   ########.fr       */
+/*   Updated: 2023/08/07 16:54:25 by snaggara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@
 #  define E_PERMISSION "permission non accordée: "
 #  define E_OUT_FILE "perreur lors de la création du fichier de sortie"
 #  define E_DUP2 "la fonction dup2 n'a pas fonctionné correctement : "
-#  define E_FILE_NOT_FOUND "aucun fichier ou dossier de ce type: ./"
-#  define E_FILE_NOT_FOUND2 "aucun fichier ou dossier de ce type: ./"
+#  define E_FILE_NOT_FOUND "no such file or directory: ./"
+#  define E_FILE_NOT_FOUND2 "no such file or directory: ./"
 #  define E_CMD_NOT_FOUND "command not found: "
-#  define E_NOCMD "permission non accordée: "
-#  define E_NB_ARG "il n'y a pas assez d'argument"
+#  define E_NOCMD "permission denied: "
+#  define E_NB_ARG "Not enough arguments"
 # endif
 
 typedef struct s_data
@@ -43,6 +43,7 @@ typedef struct s_data
 	char	*file_in;
 	char	*file_out;
 	char	**path;
+	int		path_exist;
 	char	*cmd1;
 	char	*cmd2;
 	int		ac;
@@ -56,7 +57,7 @@ typedef struct s_data
 }	t_data;
 
 t_data	ft_init(int ac, char **av, char **envp);
-char	**ft_get_path(char **envp);
+char	**ft_get_path(t_data *d);
 char	*ft_add_slash(char *path);
 int		ft_nb_slash_to_add(char *path);
 int		ft_exec_cmd(t_data *d, char *cmd);
@@ -78,5 +79,7 @@ t_data	*ft_free_d_path_close_fds(t_data *data);
 int		ft_create_stdout(t_data *d);
 int		ft_test_stdout(t_data *d);
 int		ft_empty_cmd(void);
+void	ft_fill_envp(t_data *d);
+int		ft_path_exist(t_data *d);
 
 #endif

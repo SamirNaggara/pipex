@@ -6,7 +6,7 @@
 /*   By: snaggara <snaggara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 13:40:22 by snaggara          #+#    #+#             */
-/*   Updated: 2023/06/11 09:43:01 by snaggara         ###   ########.fr       */
+/*   Updated: 2023/08/07 18:07:55 by snaggara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,9 @@ t_data	ft_init(int ac, char **av, char **envp)
 	d.envp = envp;
 	d.ac = ac;
 	d.av = av;
-	d.path = ft_get_path(envp);
-	if (!d.path)
-	{
-		ft_close_all_fds();
-		exit(0);
-	}
+	if (d.envp && *d.envp)
+		ft_fill_envp(&d);
+	d.here_doc = 0;
 	if (!ft_parse_doc(&d, av))
 	{
 		ft_free_double_tab(d.path);
@@ -66,31 +63,8 @@ int	ft_parse_here_doc(t_data *d, char **av)
 	if (d->here_doc)
 	{
 		if (!ft_stdin_file(d))
-		{
 			return (0);
-		}
 	}
-	return (1);
-}
-/*
-	Create stdout file
-*/
-
-int	ft_create_stdout(t_data *d)
-{
-	int		fd_out;
-
-	fd_out = open(d->file_out, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-	if (fd_out == -1)
-	{
-		if (errno == EACCES)
-			fd_printf(STDERR_FILENO, "%s %s\n", E_PERMISSION, d->file_out);
-		else
-			fd_printf(STDERR_FILENO, "%s\n", E_OUT_FILE);
-		close(fd_out);
-		return (0);
-	}
-	close(fd_out);
 	return (1);
 }
 

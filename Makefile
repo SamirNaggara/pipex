@@ -21,6 +21,7 @@ SOURCES	=	./main/main.c \
 			./main/init.c \
 			./main/path.c \
 			./main/process_cmd.c \
+			./main/envp.c
 
 
  
