@@ -6,7 +6,7 @@
 /*   By: snaggara <snaggara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/30 10:34:15 by snaggara          #+#    #+#             */
-/*   Updated: 2023/08/07 21:11:00 by snaggara         ###   ########.fr       */
+/*   Updated: 2023/08/07 21:55:04 by snaggara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@
 
 typedef struct s_data
 {
+	pid_t	child1;
+	pid_t	child2;
 	char	*file_content;
 	char	*file_in;
 	char	*file_out;
@@ -54,7 +56,6 @@ typedef struct s_data
 	char	*stdin_line;
 	int		fd_in;
 	int		status;
-
 }	t_data;
 
 t_data	ft_init(int ac, char **av, char **envp);
