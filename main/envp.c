@@ -6,7 +6,7 @@
 /*   By: snaggara <snaggara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 16:55:45 by snaggara          #+#    #+#             */
-/*   Updated: 2023/08/07 18:19:50 by snaggara         ###   ########.fr       */
+/*   Updated: 2023/08/08 22:51:54 by snaggara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,18 @@
 
 void	ft_fill_envp(t_data *d)
 {
-	if (d->envp && *(d->envp))
+	if (!ft_path_exist(d))
 	{
-		if (!ft_path_exist(d))
-		{
-			d->path = NULL;
-			return ;
-		}
-		d->path_exist = 1;
-		d->path = ft_get_path(d);
-		if (!d->path)
-		{
-			ft_close_all_fds();
-			exit(0);
-		}
-	}
-	else
 		d->path = NULL;
+		return ;
+	}
+	d->path_exist = 1;
+	d->path = ft_get_path(d);
+	if (!d->path)
+	{
+		ft_close_all_fds();
+		exit(0);
+	}
 }
 
 int	ft_path_exist(t_data *d)

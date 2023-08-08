@@ -6,7 +6,7 @@
 /*   By: snaggara <snaggara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 13:39:47 by snaggara          #+#    #+#             */
-/*   Updated: 2023/08/07 16:53:35 by snaggara         ###   ########.fr       */
+/*   Updated: 2023/08/08 17:09:43 by snaggara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	**ft_get_path(t_data *d)
 	char	*str_path;
 
 	i = 0;
-	while (d->path_exist && !ft_strnstr(d->envp[i], "PATH=", 5))
+	while (d->path_exist && d->envp[i] && !ft_strnstr(d->envp[i], "PATH=", 5))
 		i++;
 	str_path = ft_add_slash(d->envp[i] + 5);
 	if (!str_path)

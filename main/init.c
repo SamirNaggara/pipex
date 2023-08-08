@@ -6,7 +6,7 @@
 /*   By: snaggara <snaggara@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/01 13:40:22 by snaggara          #+#    #+#             */
-/*   Updated: 2023/08/08 14:12:50 by snaggara         ###   ########.fr       */
+/*   Updated: 2023/08/08 22:59:39 by snaggara         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,18 @@ t_data	ft_init(int ac, char **av, char **envp)
 {
 	t_data	d;
 
-	if (!(ac == 5 || (ac == 6 && ft_strncmp(av[1], "here_doc", 6) == 0)))
+	d = (t_data){0};
+	if (!((ac == 5 && ft_strncmp(av[1], "here_doc", 6) != 0)
+			|| (ac == 6 && ft_strncmp(av[1], "here_doc", 6) == 0)))
 	{
 		fd_printf(STDERR_FILENO, "%s\n", E_NB_ARG);
 		ft_close_all_fds();
 		exit(0);
 	}
-	d.envp = envp;
 	d.ac = ac;
 	d.av = av;
-	if (d.envp && *d.envp)
+	d.envp = envp;
+	if (d.envp)
 		ft_fill_envp(&d);
 	else
 		d.envp = NULL;
